@@ -14,8 +14,8 @@ class MovieLens:
 
     movieID_to_name = {}
     name_to_movieID = {}
-    ratingsPath = './data/ratings.csv'
-    moviesPath = './data/oas.csv'
+    ratingsPath = '/content/drive/MyDrive/elors_data/ratings.csv'
+    moviesPath = '/content/drive/MyDrive/elors_data/nuevo_oas_copia.csv'
     
     def actualizarRatings(self):
         import mysql.connector
