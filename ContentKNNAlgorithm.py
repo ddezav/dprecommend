@@ -53,7 +53,7 @@ class ContentKNNAlgorithm(AlgoBase):
         #GET LATENT_X FROM IDOA2
         latent_oa2 = row_oa2[:,1:-1]
         
-        result = len(latent_oa1)+len(latent_oa2)
+        result = len(row_oa1)+len(row_oa2)
                   
         #apply cosine metric or another
         return result        
