@@ -16,9 +16,10 @@ from gensim.models import Word2Vec
 import math
 class ContentKNNAlgorithm(AlgoBase):
 
-    def __init__(self, k=10, sim_options={}):
+    def __init__(self, oas,k=10, sim_options={}):
         AlgoBase.__init__(self)
         self.k = k
+        self.oas= oas
         #create the file csv
         #get array from file csv 
         #id_oa | latent_X | number of cluster 
