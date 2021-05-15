@@ -15,7 +15,7 @@ class MovieLens:
     movieID_to_name = {}
     name_to_movieID = {}
     ratingsPath = '/content/drive/MyDrive/elors_data/ratings.csv'
-    moviesPath = '/content/drive/MyDrive/elors_data/nuevo_oas_copia.csv'
+    moviesPath = '/content/drive/MyDrive/elors_data/oas.csv'
     
     def actualizarRatings(self):
         import mysql.connector
@@ -54,8 +54,8 @@ class MovieLens:
                 movieReader = csv.reader(csvfile)
                 next(movieReader)  #Skip header line
                 for row in movieReader:
-                    movieID = int(row[0])
-                    movieName = row[1]
+                    movieID = int(row[1])
+                    movieName = row[2]
                     self.movieID_to_name[movieID] = movieName
                     self.name_to_movieID[movieName] = movieID
 

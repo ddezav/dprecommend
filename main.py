@@ -22,7 +22,7 @@ random.seed(0)
 evaluator = Evaluator(evaluationData, rankings)
 
 oas= np.empty((0,102))
-with open('./oalatentclusterid.csv') as f:
+with open('/content/drive/MyDrive/elors_data/oalatentclusterid.csv') as f:
     lines=f.readlines()
     for line in lines:
         myarray = np.fromstring(line, dtype=float, sep=',')

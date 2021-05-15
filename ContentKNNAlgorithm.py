@@ -29,7 +29,6 @@ class ContentKNNAlgorithm(AlgoBase):
     def fit(self,trainset):
         AlgoBase.fit(self,trainset)
         ml = MovieLens()
-
         self.similarities = np.zeros((trainset.n_items,trainset.n_items))
         for i in range(self.trainset.n_items):
             for j in range(i+1,self.trainset.n_items):
@@ -50,9 +49,10 @@ class ContentKNNAlgorithm(AlgoBase):
         latent_oa1 = row_oa1[:,1:-1]
         #GET LATENT_X FROM IDOA2
         latent_oa2 = row_oa2[:,1:-1]
-        
-        matrix_cosine= np.array(cosine_similarity(latent_oa1,latent_oa2))
-                  
+        try:
+            matrix_cosine= np.array(cosine_similarity(latent_oa1,latent_oa2))
+        except:
+            return -1
         #apply cosine metric or another
         return np.average(matrix_cosine) 
 
@@ -64,14 +64,21 @@ class ContentKNNAlgorithm(AlgoBase):
         
         # Build up similarity scores between this item and everything the user rated
         neighbors = []
-
-        cluster_item_i = self.oas[self.oas[:,0]==i][0][-1]
+        try:
+            cluster_item_i = self.oas[self.oas[:,0]==i][0][-1]
+        except :
+            raise PredictionImpossible('No neighbors')
+            
         for rating in self.trainset.ur[u]:
             #get "m" oas that belongs to cluster of oa "i"
             similar_oas = self.oas[self.oas[:,-1]==cluster_item_i]
             for similar_idoa in similar_oas:
-                similitud_oas = self.similarities[similar_idoa,rating[0]]
-                neighbors.append( (similitud_oas, rating[1]) )
+                c = similar_idoa[0]
+                try:
+                    similitud_oas = self.similarities[int(similar_idoa[0]),rating[0]]
+                    neighbors.append( (similitud_oas, rating[1]) )
+                except :
+                    continue
         
         # Extract the top-K most-similar ratings
         k_neighbors = heapq.nlargest(self.k, neighbors, key=lambda t: t[0])
