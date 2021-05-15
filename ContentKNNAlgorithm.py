@@ -7,6 +7,7 @@ Created on Fri May  4 13:08:25 2018
 
 from surprise import AlgoBase
 from surprise import PredictionImpossible
+from sklearn.metrics.pairwise import cosine_similarity
 from MovieLens import MovieLens
 import numpy as np
 import heapq
@@ -21,7 +22,7 @@ class ContentKNNAlgorithm(AlgoBase):
         #create the file csv
         #get array from file csv 
         #id_oa | latent_X | number of cluster 
-        self.oas= np.array([])
+        self.oas= np.empty((0,102))
         with open('/content/drive/MyDrive/elors_data/oalatentclusterid.csv') as f:
             lines=f.readlines()
             for line in lines:
@@ -53,12 +54,12 @@ class ContentKNNAlgorithm(AlgoBase):
         #GET LATENT_X FROM IDOA2
         latent_oa2 = row_oa2[:,1:-1]
         
-        result = len(row_oa1)+len(row_oa2)
+        matrix_cosine= np.array(cosine_similarity(latent_oa1,latent_oa2))
                   
         #apply cosine metric or another
-        return result        
+        return np.average(matrix_cosine) 
 
-
+    #revisar el estimate para calcular 
     def estimate(self, u, i):
         
         if not (self.trainset.knows_user(u) and self.trainset.knows_item(i)):
@@ -66,10 +67,11 @@ class ContentKNNAlgorithm(AlgoBase):
         
         # Build up similarity scores between this item and everything the user rated
         neighbors = []
-    
+
+        cluster_item_i = self.oas[self.oas[:,0]==i][0][-1]
         for rating in self.trainset.ur[u]:
             #get "m" oas that belongs to cluster of oa "i"
-            similar_oas = self.oas.getByCluster(i.getCluster(),m=5)
+            similar_oas = self.oas[self.oas[:,-1]==cluster_item_i]
             for similar_idoa in similar_oas:
                 similitud_oas = self.similarities[similar_idoa,rating[0]]
                 neighbors.append( (similitud_oas, rating[1]) )
