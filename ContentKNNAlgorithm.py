@@ -22,14 +22,9 @@ class ContentKNNAlgorithm(AlgoBase):
         #create the file csv
         #get array from file csv 
         #id_oa | latent_X | number of cluster 
-        self.oas= np.empty((0,102))
-        with open('/content/drive/MyDrive/elors_data/oalatentclusterid.csv') as f:
-            lines=f.readlines()
-            for line in lines:
-                myarray = np.fromstring(line, dtype=float, sep=',')
-                a = myarray.reshape(1,102)
-                self.oas = np.append(self.oas, a, axis=0)
-
+        
+    def setOas(self,arr):
+        self.oas = arr
     def fit(self,trainset):
         AlgoBase.fit(self,trainset)
         ml = MovieLens()
