@@ -27,7 +27,8 @@ class ContentKNNAlgorithm(AlgoBase):
             lines=f.readlines()
             for line in lines:
                 myarray = np.fromstring(line, dtype=float, sep=',')
-                self.oas = np.append(self.oas, np.array(myarray), axis=0)
+                a = myarray.reshape(1,102)
+                self.oas = np.append(self.oas, a, axis=0)
 
     def fit(self,trainset):
         AlgoBase.fit(self,trainset)
