@@ -8,5 +8,6 @@
 # CONSIDERACIONES
 - Ejecutar el comando main.py para evaluar el algoritmo ContentKNNAlgorithm
 - Se debe clonear el git en google colab 
-- Ejecutar el comando !python main.py 
+- Ejecutar el comando !python main.py o buscar en https://colab.research.google.com/drive/16WSTBt3NA5vIl-edf-dQDtdYDqprLIUq?usp=sharing  el comentario #celda para evaluar el sistema de recomendación, se puede ejecutar en vez de !python main.py
+
 
